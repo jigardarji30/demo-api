@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const speakeasy = require('speakeasy');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 const fs = require('fs');
 
 var port = 8000;
@@ -17,6 +20,23 @@ const userRoute = require('./api/routes/users');
 
 mongoose.connect('mongodb://localhost:27017/demo-api',{ useNewUrlParser: true });
 
+app.use(cookieParser());
+app.use(session({
+    secret:'SECRET',
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        // originalMaxAge:'60000',
+        maxAge:'60000'
+    }}));
+
+app.use(flash())
+
+app.get('/flash',(req,res)=>{
+    req.flash('info','information');
+    console.log('information');
+    res.render('users',{messages:req.flash('info')});
+});
 
 // fs.readdirSync(__dirname + '/api/models').forEach(function(filename){
 //     console.log('filename',filename);

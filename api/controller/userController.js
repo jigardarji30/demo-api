@@ -174,7 +174,7 @@ exports.findproduct = function(req,res){
 }
 
 exports.findorder = function(req,res){
-    // order.find( {},{"qnty":1,"_id":0}
+    order.find( {},{"qnty":1,"_id":0}
         
     //     //{$group:{_id:"$email", avg:{$avg:"$qnty"}}}
 
@@ -201,7 +201,7 @@ exports.findorder = function(req,res){
     //   })
     //   order.ensureIndex({'qnty':1});
     //   order.getIndex();
-    // }).skip(3).limit(3).sort({'qnty':-1})
+    ).skip(3).limit(3).sort({'qnty':-1})
 
-    order.aggregate([{$group:{_id:"$qnty",Total:{$sum:1}}}]);
+    // order.aggregate([{$group:{_id:"$qnty",Total:{$sum:1}}}]);
 }
